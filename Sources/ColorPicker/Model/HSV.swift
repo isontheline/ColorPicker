@@ -10,7 +10,21 @@ extension HSV {
     }
 
     var rgb: RGB {
-        RGBA(makeColor()).rgb
+        guard s != 0 else { return RGB(r: v, g: v, b: v) }
+        let h6 = h * 6
+        let i = Int(h6) % 6
+        let f = h6 - Double(Int(h6))
+        let p = v * (1 - s)
+        let q = v * (1 - s * f)
+        let t = v * (1 - s * (1 - f))
+        switch i {
+        case 0: return RGB(r: v, g: t, b: p)
+        case 1: return RGB(r: q, g: v, b: p)
+        case 2: return RGB(r: p, g: v, b: t)
+        case 3: return RGB(r: p, g: q, b: v)
+        case 4: return RGB(r: t, g: p, b: v)
+        default: return RGB(r: v, g: p, b: q)
+        }
     }
 }
 

@@ -10,7 +10,22 @@ extension RGB {
     }
 
     var hsv: HSV {
-        HSVA(makeColor()).hsv
+        let cmax = max(r, g, b)
+        let cmin = min(r, g, b)
+        let delta = cmax - cmin
+        let s = cmax == 0 ? 0.0 : delta / cmax
+        let v = cmax
+        let h: Double
+        if delta == 0 {
+            h = 0
+        } else if cmax == r {
+            h = (((g - b) / delta).truncatingRemainder(dividingBy: 6)) / 6
+        } else if cmax == g {
+            h = ((b - r) / delta + 2) / 6
+        } else {
+            h = ((r - g) / delta + 4) / 6
+        }
+        return HSV(h: (h + 1).truncatingRemainder(dividingBy: 1), s: s, v: v)
     }
 }
 

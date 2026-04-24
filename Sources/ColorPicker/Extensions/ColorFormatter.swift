@@ -27,7 +27,7 @@ class ColorFormatter: Formatter {
         let g: CGFloat = color.hsv.rgb.g
         let b: CGFloat = color.hsv.rgb.b
 
-        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
+        let rgb: Int = Int((r * 255).rounded()) << 16 | Int((g * 255).rounded()) << 8 | Int((b * 255).rounded()) << 0
 
         return String(format: "%06x", rgb)
     }
